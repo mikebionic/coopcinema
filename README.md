@@ -1,4 +1,4 @@
-# Co-op Video Theater - Technical Summary
+# Co-op Cinema - Technical Summary
 
 ## Purpose
 Real-time synchronized video player that allows multiple users to watch local video files together across different computers, with synchronized playback controls.

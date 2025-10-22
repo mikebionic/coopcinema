@@ -1,4 +1,4 @@
-module videosynch
+module coopcinema
 
 go 1.25.1
 
