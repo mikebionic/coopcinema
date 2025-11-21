@@ -1,14 +1,12 @@
-name: CI
+name: Release
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch: {}
+    tags:
+      - "v*"
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,8 +34,9 @@ jobs:
           cd build
           zip -r coopcinema-linux.zip package
 
-      - name: Upload ZIP artifact
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: coopcinema-linux
-          path: build/coopcinema-linux.zip
+          files: build/coopcinema-linux.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
