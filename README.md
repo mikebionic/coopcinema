@@ -6,6 +6,12 @@ Real-time synchronized video player that allows multiple users to watch local vi
 ![App1](public/app2.png)
 ![App2](public/app1.png)
 
+## Build the app:
+
+```bash
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o build/coopcinema
+```
+
 ## Core Functionality
 
 ### Room System
