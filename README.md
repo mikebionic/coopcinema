@@ -3,8 +3,8 @@
 ## Purpose
 Real-time synchronized video player that allows multiple users to watch local video files together across different computers, with synchronized playback controls.
 
-![App1](public/app2.png)
-![App2](public/app1.png)
+![Main Page](docs/screenshots/app1.png)
+![Room page with video](docs/screenshots/app2.png)
 
 ## Build the app:
 
