@@ -2,8 +2,13 @@
 
 Real-time synchronized video player for watching videos together with friends, anywhere in the world. Supports YouTube, Vimeo, Twitch, Dailymotion, direct video URLs, and local files — all with synchronized playback controls, live chat, and reactions.
 
-![Main Page](docs/screenshots/app1.png)
-![Room page with video](docs/screenshots/app2.png)
+A weekend project born out of a simple pain: wanting to watch YouTube videos with friends who are far away. Built with Go and vanilla JS. No frameworks, no complexity — just WebSockets and browser APIs.
+
+Demonstrated at [DevFest Ashgabat 2025](https://gdg.community.dev/events/details/google-gdg-ashgabat-presents-devfest-ashgabat-2025-a-glimpse-into-the-future-of-tech/) by GDG Ashgabat as part of the talk *"Code. Build. Deploy. Repeat. GitHub Pipelines & Cloud Deployments for Go"* — [YouTube](https://youtu.be/yfzkSp3TlT4) / [Slides](https://docs.google.com/presentation/d/14vg2_i91qOmdQ1yzyZTImcgbh_ejWJ8Oi3I729aS3wA/edit?usp=sharing)
+
+![Lobby and Room with YouTube player](docs/screenshots/room.webp)
+![Chat sidebar and toast notifications](docs/screenshots/lobby.webp)
+![Theater Fullscreen mode](docs/screenshots/player.webp)
 
 ## Quick Start (Docker — one command)
 
@@ -52,6 +57,9 @@ All settings are in `.env` (copy from `.env.example`):
 | Variable | Default | Description |
 |---|---|---|
 | `SERVER_ADDR` | `:8080` | Listen address (`host:port`) |
+| `PORT` | `8080` | Port only (used by Render, Railway, Fly.io) |
+
+`SERVER_ADDR` takes priority. If not set, falls back to `PORT`, then defaults to `:8080`.
 
 ## Deploy to Cloud (free)
 
@@ -62,6 +70,8 @@ All settings are in `.env` (copy from `.env.example`):
 3. Connect your repo
 4. Settings: **Runtime** = Docker, **Plan** = Free
 5. Deploy — Render builds the Dockerfile automatically
+
+Or use the blueprint: **New** → **Blueprint** → select repo → it reads `render.yaml` automatically.
 
 ### Fly.io
 
@@ -80,7 +90,7 @@ flyctl deploy        # builds & deploys
 
 ### Video Sources
 - **Local files** — drag & drop or browse; no upload, files stay on your machine
-- **YouTube** — paste any YouTube URL, embedded player with full sync
+- **YouTube** — paste any YouTube URL, embedded player with full sync, custom volume and speed controls
 - **Vimeo** — Vimeo Player SDK integration with play/pause/seek sync
 - **Twitch** — live streams (shared view) and VODs (seek-synced)
 - **Dailymotion** — iframe embed with postMessage sync
@@ -103,9 +113,18 @@ flyctl deploy        # builds & deploys
 - Auto-state sync: new joiners receive the current video, timestamp, and play state
 
 ### Chat & Reactions
-- Collapsible chat sidebar (slides over video on mobile)
-- Floating action button to toggle chat
-- Reaction emoji bar (6 emojis) with float-up animation overlay on the video
+- Collapsible chat sidebar with slide-in animation
+- Chat FAB button (visible only inside a room)
+- Toast popup notifications when chat is closed (stack up to 5, auto-dismiss, click to open chat)
+- Notification sound via Web Audio API
+- Reaction emoji bar (6 emojis) with float-up animation overlay
+- Reactor's name displayed under each floating emoji
+- All overlays visible in Theater Fullscreen mode
+
+### Theater Fullscreen
+- Custom fullscreen using the Fullscreen API on the video wrapper
+- Keeps reactions, chat toasts, chat sidebar, and controls visible — unlike native YouTube fullscreen
+- ESC key support, fullscreen state synced via event listeners
 
 ### Host/Viewer Roles
 - Room creator becomes host by default
@@ -167,3 +186,16 @@ flyctl deploy        # builds & deploys
 - Synchronized video presentations across locations
 - Collaborative video review sessions
 - Distance learning with synchronized lecture videos
+- Live deployment demos and testing
+
+## Support
+
+Built by **Mike (Muhammetberdi) Jepbarov**.
+
+If you find this project useful or fun — give it a star on GitHub, share it with friends, or just watch something together. That's the best support there is.
+
+[![GitHub stars](https://img.shields.io/github/stars/mikebionic/coopcinema?style=social)](https://github.com/mikebionic/coopcinema)
+
+- [GitHub](https://github.com/mikebionic)
+- [LinkedIn](https://www.linkedin.com/in/muhammetberdi-jepbarov/)
+- [YouTube — DevFest talk](https://youtu.be/yfzkSp3TlT4)

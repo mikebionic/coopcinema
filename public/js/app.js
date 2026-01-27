@@ -7,13 +7,31 @@ const adjectives = [
     "Stellar", "Cosmic", "Velvet", "Golden", "Silver",
     "Crimson", "Azure", "Emerald", "Royal", "Grand",
     "Imperial", "Majestic", "Classic", "Vintage", "Modern",
-    "Electric", "Neon", "Starlight", "Moonlit", "Sunset"
+    "Electric", "Neon", "Starlight", "Moonlit", "Sunset",
+    "Wahey", "Eýway", "Tüweleme", "Kämil", "Ýaman",
+    "Baýbä", "Gowy", "Bitertip", "Geň", "Edil",
+    "Bäh", "Wah-Wah", "Gaýratly", "Sabyrly", "Gülküli",
+    "Tagamly", "Şeýleräk", "Nähiliräk", "Galla-Gylla",
+    "Çakyr-Çukur", "Bolgusyz", "Ýürekli",
+    "Merdana", "Batyr", "Beýik", "Nurana", "Owadan",
+    "Joşgunly", "Akylly", "Parasatly", "Eziz", "Gadymy",
+    "Ajaýyp", "Şöhratly", "Gaýduwsyz", "Abraýly",
+    "Gözel", "Päk", "Asuda", "Bagtyýar", "Kuwwatly",
+    "Halal", "Mylaýym", "Dogruçyl", "Wepaly"
 ];
 
 const nouns = [
     "Cinema", "Theater", "Palace", "Auditorium", "Screen",
     "Pavilion", "Plaza", "Studio", "Hall", "Arena",
-    "Dome", "Stage", "Lounge", "Gallery", "Showroom"
+    "Dome", "Stage", "Lounge", "Gallery", "Showroom",
+    // Turkmen words & fairy tale characters
+    "Borda", "Bala", "Bela", "Jana", "Neme",
+    "Oglan", "Gyz", "Jan", "Akpamyk", "Ýartygulak",
+    "Dow", "Azdar", "Böwenjik", "Hüýrlukga", "Hemra",
+    "Ýusup", "Züleýha",
+    "Saýatly", "Jygaly", "Pälwan", "Soltan", "Kerem",
+    "Daýhan", "Çopan", "Sazanda", "Bagşy",
+    "Dutarçy", "Halyçy", "Ýigit", "Gelin"
 ];
 
 // Application state

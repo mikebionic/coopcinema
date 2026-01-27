@@ -257,13 +257,18 @@ body {
 }
 
 .guide-note {
-    background: rgba(255, 165, 0, 0.1);
+    background: rgba(255, 165, 0, 0.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-left: 3px solid var(--theater-gold);
+    border: 1px solid rgba(255, 165, 0, 0.15);
     border-left: 3px solid var(--theater-gold);
     padding: 16px;
-    border-radius: 8px;
+    border-radius: 12px;
     color: var(--text-secondary);
     line-height: 1.6;
     font-size: 14px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .guide-note strong {
@@ -350,19 +355,22 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 165, 0, 0.1);
-    border: 1px solid rgba(255, 165, 0, 0.3);
+    background: rgba(255, 165, 0, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 165, 0, 0.25);
     border-radius: 50%;
     color: var(--theater-amber);
     text-decoration: none;
     transition: all 0.3s ease;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .social-btn:hover {
     background: var(--theater-gold);
     color: var(--theater-darker);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px var(--shadow-glow);
+    box-shadow: 0 6px 20px var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* ============================================
@@ -439,14 +447,18 @@ input[type="text"]::placeholder {
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: var(--theater-amber);
-    border: 2px solid rgba(255, 165, 0, 0.3);
+    border: 2px solid rgba(255, 165, 0, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 165, 0, 0.15);
+    background: rgba(255, 165, 0, 0.12);
     border-color: var(--theater-gold);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 20px rgba(255, 165, 0, 0.15);
 }
 
 .btn:active {
@@ -461,28 +473,36 @@ input[type="text"]::placeholder {
     width: auto;
     padding: 10px 20px;
     font-size: 14px;
-    background: rgba(139, 0, 0, 0.3);
+    background: rgba(139, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: #ff6b6b;
-    border: 1px solid rgba(139, 0, 0, 0.5);
+    border: 1px solid rgba(139, 0, 0, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .btn-leave:hover {
-    background: rgba(139, 0, 0, 0.5);
+    background: rgba(139, 0, 0, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 4px 16px rgba(139, 0, 0, 0.3);
 }
 
 .btn-icon {
-    background: rgba(255, 165, 0, 0.1);
-    border: 1px solid rgba(255, 165, 0, 0.3);
+    background: rgba(255, 165, 0, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 165, 0, 0.25);
     padding: 8px 12px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s ease;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .btn-icon:hover {
     background: var(--theater-gold);
     transform: scale(1.1);
+    box-shadow: 0 4px 16px var(--shadow-glow);
 }
 
 /* ============================================
@@ -607,15 +627,18 @@ input[type="text"]::placeholder {
 }
 
 .room-code-display code {
-    background: rgba(255, 165, 0, 0.15);
+    background: rgba(255, 165, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 2px solid var(--theater-gold);
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-family: 'Courier New', monospace;
     font-size: 20px;
     font-weight: bold;
     color: var(--theater-yellow);
     letter-spacing: 2px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 16px rgba(255, 165, 0, 0.15);
 }
 
 /* ============================================
@@ -639,8 +662,10 @@ input[type="text"]::placeholder {
 }
 
 .user-badge {
-    background: rgba(255, 165, 0, 0.2);
-    border: 1px solid var(--theater-gold);
+    background: rgba(255, 165, 0, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 165, 0, 0.3);
     color: var(--theater-amber);
     padding: 8px 16px;
     border-radius: 20px;
@@ -649,12 +674,19 @@ input[type="text"]::placeholder {
     display: flex;
     align-items: center;
     gap: 6px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
+}
+
+.user-badge:hover {
+    background: rgba(255, 165, 0, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 10px rgba(255, 165, 0, 0.1);
 }
 
 .user-badge.me {
     background: linear-gradient(135deg, var(--theater-gold), var(--theater-amber));
     color: var(--theater-darker);
-    box-shadow: 0 4px 12px var(--shadow-glow);
+    box-shadow: 0 4px 12px var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .user-status-icon {
@@ -697,17 +729,23 @@ input[type="text"]::placeholder {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .drop-zone:hover {
     border-color: var(--theater-gold);
     background: rgba(255, 165, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 4px 20px rgba(255, 165, 0, 0.1);
 }
 
 .drop-zone.dragover {
     border-color: var(--theater-yellow);
     background: rgba(255, 165, 0, 0.1);
     transform: scale(1.02);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 30px rgba(255, 165, 0, 0.15);
 }
 
 .drop-icon {
@@ -736,9 +774,11 @@ input[type="text"]::placeholder {
     display: none;
     border-radius: 16px;
     overflow: hidden;
+    border: 1px solid rgba(255, 165, 0, 0.1);
     box-shadow:
             0 20px 60px rgba(0, 0, 0, 0.5),
-            0 0 80px rgba(255, 165, 0, 0.2);
+            0 0 80px rgba(255, 165, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
     position: relative;
 }
 
@@ -792,6 +832,12 @@ video {
 .url-input-group {
     padding: 16px 24px;
     margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 165, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .url-input-group label {
@@ -936,17 +982,24 @@ video {
 }
 
 .chat-msg {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
     padding: 10px 14px;
     max-width: 85%;
     align-self: flex-start;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .chat-msg.me {
     align-self: flex-end;
-    background: rgba(255, 165, 0, 0.15);
+    background: rgba(255, 165, 0, 0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border: 1px solid rgba(255, 165, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .chat-msg-name {
@@ -1117,8 +1170,14 @@ video {
     display: none;
     justify-content: center;
     gap: 12px;
-    padding: 12px 0;
+    padding: 12px 16px;
     margin-top: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 165, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .reaction-btn {
@@ -1126,6 +1185,8 @@ video {
     height: 48px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border: 1px solid rgba(255, 165, 0, 0.2);
     font-size: 24px;
     cursor: pointer;
@@ -1133,12 +1194,14 @@ video {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .reaction-btn:hover {
     transform: scale(1.2);
     background: rgba(255, 165, 0, 0.15);
     border-color: var(--theater-gold);
+    box-shadow: 0 4px 16px rgba(255, 165, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .reaction-btn:active {
@@ -1197,19 +1260,23 @@ video {
     width: auto;
     padding: 10px 20px;
     font-size: 14px;
-    background: rgba(255, 165, 0, 0.1);
+    background: rgba(255, 165, 0, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: var(--theater-amber);
-    border: 1px solid rgba(255, 165, 0, 0.3);
+    border: 1px solid rgba(255, 165, 0, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .btn-host:hover {
-    background: rgba(255, 165, 0, 0.2);
+    background: rgba(255, 165, 0, 0.15);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 16px rgba(255, 165, 0, 0.1);
 }
 
 .btn-host.active {
     background: linear-gradient(135deg, var(--theater-gold), var(--theater-amber));
     color: var(--theater-darker);
-    box-shadow: 0 4px 12px var(--shadow-glow);
+    box-shadow: 0 4px 12px var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* ============================================
@@ -1340,8 +1407,11 @@ video {
     margin-top: 6px;
     gap: 12px;
     background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 165, 0, 0.1);
     border-radius: 10px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .custom-ctrl-group {
