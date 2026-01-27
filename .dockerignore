@@ -1,0 +1,6 @@
+.idea/
+build/
+.env
+.git
+.gitignore
+README.md

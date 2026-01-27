@@ -16,7 +16,12 @@ type Config struct {
 func Load() *Config {
 	addr := os.Getenv("SERVER_ADDR")
 	if addr == "" {
-		addr = ":8080"
+		// Render and similar platforms set PORT
+		if port := os.Getenv("PORT"); port != "" {
+			addr = ":" + port
+		} else {
+			addr = ":8080"
+		}
 	}
 
 	return &Config{

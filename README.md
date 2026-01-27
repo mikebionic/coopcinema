@@ -5,15 +5,76 @@ Real-time synchronized video player for watching videos together with friends, a
 ![Main Page](docs/screenshots/app1.png)
 ![Room page with video](docs/screenshots/app2.png)
 
-## Build & Run
+## Quick Start (Docker — one command)
 
 ```bash
-# Build
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o build/coopcinema
+cp .env.example .env
+docker compose up -d
+```
 
-# Run
+Open [http://localhost:8080](http://localhost:8080) — done.
+
+To stop: `docker compose down`
+
+## Setup
+
+### Docker (recommended)
+
+```bash
+git clone https://github.com/youruser/coopcinema.git
+cd coopcinema
+cp .env.example .env    # edit .env if needed
+docker compose up -d
+```
+
+### Without Docker
+
+Requires Go 1.23+
+
+```bash
+git clone https://github.com/youruser/coopcinema.git
+cd coopcinema
+cp .env.example .env
 go run .
 ```
+
+### Build binary
+
+```bash
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o build/coopcinema
+./build/coopcinema
+```
+
+## Configuration
+
+All settings are in `.env` (copy from `.env.example`):
+
+| Variable | Default | Description |
+|---|---|---|
+| `SERVER_ADDR` | `:8080` | Listen address (`host:port`) |
+
+## Deploy to Cloud (free)
+
+### Render
+
+1. Push repo to GitHub
+2. Go to [render.com](https://render.com) → New → Web Service
+3. Connect your repo
+4. Settings: **Runtime** = Docker, **Plan** = Free
+5. Deploy — Render builds the Dockerfile automatically
+
+### Fly.io
+
+```bash
+flyctl launch        # creates fly.toml
+flyctl deploy        # builds & deploys
+```
+
+### Railway
+
+1. Go to [railway.app](https://railway.app) → New Project → Deploy from GitHub
+2. Select repo — Railway auto-detects the Dockerfile
+3. Add env var `SERVER_ADDR=:8080` if needed
 
 ## Features
 

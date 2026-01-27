@@ -1,0 +1,8 @@
+services:
+  coopcinema:
+    build: .
+    ports:
+      - "${SERVER_ADDR:-8080}:8080"
+    env_file:
+      - .env
+    restart: unless-stopped
