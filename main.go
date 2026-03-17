@@ -2,6 +2,7 @@ package main
 
 import (
 	"coopcinema/config"
+	"coopcinema/games"
 	"coopcinema/handlers"
 	"coopcinema/hub"
 	"log"
@@ -22,6 +23,10 @@ func main() {
 	})
 
 	http.HandleFunc("/generate-room", handlers.ServeGenerateRoom)
+
+	if cfg.GamesEnabled {
+		games.Register()
+	}
 
 	log.Printf("🎬 Co-op Video Theater starting on %s", cfg.ServerAddr)
 	log.Printf("📂 Serving static files from ./public")

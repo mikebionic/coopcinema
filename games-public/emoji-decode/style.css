@@ -1,0 +1,139 @@
+/* ============================================
+   EMOJI DECODE - Game Styles
+   ============================================ */
+
+.round-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.round-badge {
+    font-size: 0.85rem;
+    padding: 4px 14px;
+    border-radius: 10px;
+    background: rgba(255, 165, 0, 0.15);
+    color: var(--theater-amber);
+    font-weight: 600;
+}
+
+.category-badge {
+    font-size: 0.8rem;
+    padding: 4px 12px;
+    border-radius: 10px;
+    background: rgba(96, 165, 250, 0.15);
+    color: var(--info);
+}
+
+.emoji-display {
+    text-align: center;
+    font-size: 4rem;
+    padding: 24px;
+    margin: 12px 0;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    letter-spacing: 8px;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.hint-box {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.25);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    color: var(--theater-yellow);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.guess-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.guess-area input {
+    flex: 1;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.guess-area input:focus {
+    border-color: var(--theater-gold);
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.2);
+}
+
+.guess-area .btn {
+    width: auto;
+    min-width: 100px;
+}
+
+.guess-feedback {
+    min-height: 30px;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.guess-feedback.correct {
+    color: var(--success);
+    font-weight: 600;
+}
+
+.guess-feedback.wrong {
+    color: var(--danger);
+}
+
+.guess-feedback.close {
+    color: var(--theater-yellow);
+}
+
+.guess-log {
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.guess-log .log-entry {
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.guess-log .log-entry.correct-entry {
+    background: rgba(74, 222, 128, 0.1);
+    color: var(--success);
+}
+
+.round-score-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.round-score-item .pts {
+    color: var(--theater-gold);
+    font-weight: 600;
+}

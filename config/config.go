@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strings"
 	"time"
 )
 
@@ -11,6 +12,7 @@ type Config struct {
 	ReadTimeout      time.Duration
 	WriteTimeout     time.Duration
 	ClientSendBuffer int
+	GamesEnabled     bool
 }
 
 func Load() *Config {
@@ -24,11 +26,17 @@ func Load() *Config {
 		}
 	}
 
+	gamesEnabled := true
+	if ge := os.Getenv("GAMES_ENABLED"); ge != "" {
+		gamesEnabled = strings.ToLower(ge) != "false"
+	}
+
 	return &Config{
 		ServerAddr:       addr,
 		PingInterval:     54 * time.Second,
 		ReadTimeout:      60 * time.Second,
 		WriteTimeout:     10 * time.Second,
 		ClientSendBuffer: 256,
+		GamesEnabled:     gamesEnabled,
 	}
 }

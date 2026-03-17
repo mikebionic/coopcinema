@@ -1,0 +1,85 @@
+/* ============================================
+   LOBBY GAME CARDS
+   ============================================ */
+
+.games-section {
+    margin-top: 24px;
+}
+
+.games-section h3 {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: var(--theater-amber, #ffb84d);
+}
+
+.game-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 165, 0, 0.15);
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 165, 0, 0.1);
+    cursor: pointer;
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 165, 0, 0.4);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(255, 165, 0, 0.15);
+}
+
+.game-card .card-icon {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.game-card .card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.game-card .card-players {
+    font-size: 0.75rem;
+    color: #b8b8b8;
+    background: rgba(255, 165, 0, 0.1);
+    padding: 3px 10px;
+    border-radius: 8px;
+}
+
+@media (max-width: 500px) {
+    .game-cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .game-card {
+        flex-direction: row;
+        gap: 14px;
+        padding: 14px 18px;
+        text-align: left;
+    }
+    .game-card .card-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0;
+    }
+}

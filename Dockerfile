@@ -19,6 +19,7 @@ WORKDIR /app
 
 COPY --from=builder /app/coopcinema .
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/games-public ./games-public
 
 EXPOSE 8080
 
