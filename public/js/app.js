@@ -69,6 +69,7 @@ let dmIgnoreEvents = false;
 
 // Chat state
 let chatOpen = false;
+let chatUnreadCount = 0;
 
 // Host/viewer roles
 let isHost = false;
@@ -97,6 +98,11 @@ function generateName() {
     const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
     const noun = nouns[Math.floor(Math.random() * nouns.length)];
     return `${adj} ${noun}`;
+}
+
+function extractYouTubePlaylist(url) {
+    const m = url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+    return m ? m[1] : null;
 }
 
 function extractYouTubeId(url) {
@@ -202,7 +208,7 @@ function leaveRoom() {
 
     document.getElementById('lobby').style.display = 'block';
     document.getElementById('room').style.display = 'none';
-    document.getElementById('videoPlayer').src = '';
+    clearVideoSrc();
     document.getElementById('dropZone').style.display = 'block';
     document.querySelector('.video-container').classList.remove('active');
     hideAllPlayers();
@@ -366,7 +372,11 @@ function handleMessage(msg) {
 
     // Source loading messages
     if (msg.type === 'youtube') {
-        loadYouTube(msg.url, false);
+        loadYouTube(msg.url, false, msg.playlist || null);
+        return;
+    }
+    if (msg.type === 'videoreset') {
+        resetVideoSource(false);
         return;
     }
     if (msg.type === 'directurl') {
@@ -741,11 +751,14 @@ function onLoadUrlClick() {
 
     if (sourceType === 'youtube') {
         const videoId = extractYouTubeId(url);
-        if (!videoId) {
-            alert('Could not extract a valid YouTube video ID');
+        const playlistId = extractYouTubePlaylist(url);
+        if (!videoId && !playlistId) {
+            alert('Could not extract a valid YouTube video ID or playlist');
             return;
         }
-        loadYouTube(videoId, true);
+        // If the URL points at a specific video, play that video — don't let a
+        // mix / Watch Later (&list=) hijack it into a whole-playlist playback.
+        loadYouTube(videoId || '', true, videoId ? null : playlistId);
     } else if (sourceType === 'vimeo') {
         const videoId = extractVimeoId(url);
         if (!videoId) {
@@ -793,6 +806,14 @@ function updateUrlHint() {
 // HIDE/SHOW PLAYERS
 // ============================================
 
+// Clear the <video> source without making the browser fetch the page URL
+// (setting .src = '' resolves to the current document and triggers a request).
+function clearVideoSrc() {
+    const v = document.getElementById('videoPlayer');
+    v.removeAttribute('src');
+    v.load();
+}
+
 function hideAllPlayers() {
     document.getElementById('videoPlayer').style.display = 'none';
     document.getElementById('youtubePlayerContainer').style.display = 'none';
@@ -810,6 +831,49 @@ function activatePlayerView() {
     document.getElementById('customControlsBar').style.display = 'flex';
 }
 
+function resetVideoSource(broadcast) {
+    if (broadcast === undefined) broadcast = true;
+
+    hideAllPlayers();
+    document.querySelector('.video-container').classList.remove('active');
+    document.querySelector('.yt-divider').style.display = '';
+    document.getElementById('urlInputGroup').style.display = '';
+    document.getElementById('dropZone').style.display = 'block';
+    document.getElementById('reactionBar').style.display = 'none';
+    document.getElementById('customControlsBar').style.display = 'none';
+    hideYTControls();
+
+    clearVideoSrc();
+    document.getElementById('videoUrlInput').value = '';
+
+    if (ytPlayer && ytPlayer.destroy) {
+        ytPlayer.destroy();
+        ytPlayer = null;
+        ytReady = false;
+    }
+    if (vimeoPlayer) {
+        vimeoPlayer.destroy();
+        vimeoPlayer = null;
+    }
+    if (twitchEmbed) {
+        document.getElementById('twitchPlayerContainer').innerHTML = '';
+        twitchEmbed = null;
+        twitchPlayer = null;
+    }
+    if (dmPlayer) {
+        document.getElementById('dailymotionPlayerContainer').innerHTML = '';
+        dmPlayer = null;
+        dmReady = false;
+    }
+
+    currentSource = 'none';
+    currentSourceUrl = '';
+
+    if (broadcast && ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'videoreset' }));
+    }
+}
+
 // ============================================
 // YOUTUBE PLAYER
 // ============================================
@@ -818,7 +882,7 @@ function onYouTubeIframeAPIReady() {
     console.log('YouTube IFrame API ready');
 }
 
-function loadYouTube(videoId, broadcast) {
+function loadYouTube(videoId, broadcast, playlistId) {
     currentSource = 'youtube';
     currentSourceUrl = videoId;
     hideAllPlayers();
@@ -826,17 +890,26 @@ function loadYouTube(videoId, broadcast) {
     document.getElementById('youtubePlayerContainer').style.display = 'block';
 
     if (ytPlayer && ytReady) {
-        ytPlayer.loadVideoById(videoId);
+        if (playlistId) {
+            ytPlayer.loadPlaylist({ list: playlistId, listType: 'playlist' });
+        } else {
+            ytPlayer.loadVideoById(videoId);
+        }
     } else {
+        const playerVars = { autoplay: 0, controls: 1, rel: 0, modestbranding: 1 };
+        if (playlistId) {
+            playerVars.list = playlistId;
+            playerVars.listType = 'playlist';
+        }
         ytPlayer = new YT.Player('youtubePlayerContainer', {
-            videoId: videoId,
-            playerVars: { autoplay: 0, controls: 1, rel: 0, modestbranding: 1 },
+            videoId: videoId || undefined,
+            playerVars: playerVars,
             events: { onReady: onYTPlayerReady, onStateChange: onYTStateChange }
         });
     }
 
     if (broadcast && ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: 'youtube', url: videoId }));
+        ws.send(JSON.stringify({ type: 'youtube', url: videoId, playlist: playlistId || '' }));
     }
 }
 
@@ -1170,10 +1243,21 @@ function toggleChat() {
     chatOpen = !chatOpen;
     document.getElementById('chatSidebar').classList.toggle('open', chatOpen);
     if (chatOpen) {
-        // Clear all toasts when opening chat
         clearAllToasts();
-        // Focus input
+        chatUnreadCount = 0;
+        updateChatBadge();
         setTimeout(() => document.getElementById('chatInput').focus(), 300);
+    }
+}
+
+function updateChatBadge() {
+    const badge = document.getElementById('chatUnreadBadge');
+    if (!badge) return;
+    if (chatUnreadCount > 0) {
+        badge.textContent = chatUnreadCount > 99 ? '99+' : chatUnreadCount;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
     }
 }
 
@@ -1218,8 +1302,9 @@ function displayChatMessage(userName, content, isMe) {
     // Notification for incoming messages
     if (!isMe) {
         playChatNotifSound();
-        // Show toast popup only when chat is closed
         if (!chatOpen) {
+            chatUnreadCount++;
+            updateChatBadge();
             showChatToast(userName, content);
         }
     }
@@ -1273,10 +1358,22 @@ function clearAllToasts() {
 // REACTIONS
 // ============================================
 
+const reactionCounts = {};
+
 function sendReaction(emoji) {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     ws.send(JSON.stringify({ type: 'reaction', content: emoji, userName: myUserName }));
     showReactionAnimation(emoji, myUserName);
+}
+
+function incrementReactionCount(emoji) {
+    reactionCounts[emoji] = (reactionCounts[emoji] || 0) + 1;
+    const safeId = 'rc-' + emoji.codePointAt(0);
+    const el = document.getElementById(safeId);
+    if (el) {
+        el.textContent = reactionCounts[emoji] > 99 ? '99+' : reactionCounts[emoji];
+        el.style.display = 'flex';
+    }
 }
 
 function showReactionAnimation(emoji, userName) {
@@ -1298,6 +1395,7 @@ function showReactionAnimation(emoji, userName) {
 
     overlay.appendChild(el);
     el.addEventListener('animationend', () => el.remove());
+    incrementReactionCount(emoji);
 }
 
 // ============================================

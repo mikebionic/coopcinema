@@ -36,7 +36,7 @@ const GameBase = (function () {
     // WebSocket URL
     function wsUrl() {
         const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-        return `${proto}//${location.host}/ws?room=${roomCode}`;
+        return `${proto}//${location.host}/ws?room=${roomCode}&name=${encodeURIComponent(myName || 'Player')}&id=${myId}`;
     }
 
     // Create a new room via /generate-room endpoint
@@ -61,6 +61,9 @@ const GameBase = (function () {
 
         ws.onopen = function () {
             clearTimeout(reconnectTimer);
+            // Add ourselves to the player list immediately
+            players[myId] = { name: myName, ready: false };
+            fire('playerUpdate', { players: { ...players }, hostId: getHostId() });
             // Announce ourselves
             send('game:join', { name: myName });
             // Heartbeat
@@ -80,9 +83,36 @@ const GameBase = (function () {
                 return;
             }
 
+            // Handle server-sent userList (when someone joins/leaves)
+            if (msg.type === 'userList') {
+                let users = [];
+                try { users = JSON.parse(msg.userName || '[]'); } catch (e) {}
+                const activeIds = users.map(function (u) { return u.id; });
+                // Check if there are new players we don't know about
+                let hasNewPlayers = false;
+                users.forEach(function (u) {
+                    if (!players[u.id]) {
+                        players[u.id] = { name: u.name, ready: false };
+                        if (u.id !== myId) hasNewPlayers = true;
+                    }
+                });
+                // Remove players no longer in room (keep self)
+                Object.keys(players).forEach(function (id) {
+                    if (id !== myId && !activeIds.includes(id)) {
+                        delete players[id];
+                    }
+                });
+                fire('playerUpdate', { players: { ...players }, hostId: getHostId() });
+                // Re-announce ourselves only when new players appeared
+                if (hasNewPlayers) {
+                    send('game:join', { name: myName });
+                }
+                return;
+            }
+
             // The relay sends: { type, userId, userName, content, timestamp }
             // Game messages pack game-type inside content as JSON
-            const senderId = msg.userId || '';
+            const senderId = msg.userID || msg.userId || '';
             const senderName = msg.userName || '';
 
             // Try parsing content as game message

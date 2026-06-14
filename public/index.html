@@ -216,22 +216,31 @@
                         </select>
                     </label>
                 </div>
+                <button class="yt-ctrl-btn" onclick="resetVideoSource()" title="Change Video">🔄 Change Video</button>
                 <button class="yt-ctrl-btn" id="ytFullscreenBtn" onclick="toggleCustomFullscreen()" title="Theater Fullscreen">⛶ Theater Fullscreen</button>
             </div>
 
             <!-- Reaction Emojis -->
             <div class="reaction-bar" id="reactionBar" style="display:none;">
-                <button class="reaction-btn" onclick="sendReaction('😂')">😂</button>
-                <button class="reaction-btn" onclick="sendReaction('❤️')">❤️</button>
-                <button class="reaction-btn" onclick="sendReaction('😮')">😮</button>
-                <button class="reaction-btn" onclick="sendReaction('👏')">👏</button>
-                <button class="reaction-btn" onclick="sendReaction('😢')">😢</button>
-                <button class="reaction-btn" onclick="sendReaction('🔥')">🔥</button>
+                <button class="reaction-btn" onclick="sendReaction('😂')" title="Смеюсь">😂<span class="reaction-count" id="rc-128514"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('❤️')" title="Люблю">❤️<span class="reaction-count" id="rc-10084"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('😮')" title="Вау">😮<span class="reaction-count" id="rc-128558"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('👏')" title="Аплодисменты">👏<span class="reaction-count" id="rc-128079"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('😢')" title="Грустно">😢<span class="reaction-count" id="rc-128546"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('🔥')" title="Огонь">🔥<span class="reaction-count" id="rc-128293"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('😍')" title="Восторг">😍<span class="reaction-count" id="rc-128525"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('🎉')" title="Праздник">🎉<span class="reaction-count" id="rc-127881"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('👍')" title="Лайк">👍<span class="reaction-count" id="rc-128077"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('💀')" title="Смерть от смеха">💀<span class="reaction-count" id="rc-128128"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('🤯')" title="Взрыв мозга">🤯<span class="reaction-count" id="rc-129327"></span></button>
+                <button class="reaction-btn" onclick="sendReaction('🙌')" title="Ура">🙌<span class="reaction-count" id="rc-128588"></span></button>
             </div>
 
             <!-- Toast + Chat + FAB inside wrapper so they're visible in fullscreen -->
             <div id="chatToastContainer"></div>
-            <button class="chat-fab" id="chatFab" onclick="toggleChat()" style="display:none;">💬</button>
+            <button class="chat-fab" id="chatFab" onclick="toggleChat()" style="display:none;">
+                💬<span class="chat-unread-badge" id="chatUnreadBadge" style="display:none;"></span>
+            </button>
             <div class="chat-sidebar" id="chatSidebar">
                 <div class="chat-header">
                     <span>💬 Chat</span>

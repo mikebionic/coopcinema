@@ -7,6 +7,7 @@ type Message struct {
 	UserName   string  `json:"userName,omitempty"`
 	UserID     string  `json:"userID,omitempty"`
 	URL        string  `json:"url,omitempty"`
+	Playlist   string  `json:"playlist,omitempty"`
 	Content    string  `json:"content,omitempty"`
 	SentAt     float64 `json:"sentAt,omitempty"`
 	SourceType string  `json:"sourceType,omitempty"`
