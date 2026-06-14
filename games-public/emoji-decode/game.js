@@ -67,9 +67,7 @@
     }
 
     window.copyCode = function () {
-        navigator.clipboard.writeText(GameBase.roomCode).then(function () {
-            GameBase.toast('Room code copied!');
-        });
+        GameBase.copyRoomLink();
     };
 
     // --- Player Updates ---

@@ -16,7 +16,9 @@ func main() {
 	go h.Run()
 
 	fs := http.FileServer(http.Dir("./public"))
-	http.Handle("/", fs)
+	// Force browsers to revalidate static assets so code changes are picked up
+	// without a manual hard refresh (304 when unchanged, so still cheap).
+	http.Handle("/", noCache(fs))
 
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		handlers.ServeWs(h, w, r)
@@ -34,4 +36,11 @@ func main() {
 	if err := http.ListenAndServe(cfg.ServerAddr, nil); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
+}
+
+func noCache(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-cache, must-revalidate")
+		next.ServeHTTP(w, r)
+	})
 }

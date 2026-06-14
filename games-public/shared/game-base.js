@@ -228,6 +228,18 @@ const GameBase = (function () {
         return new URLSearchParams(location.search).get(name);
     }
 
+    // Full shareable invite link for the current room (room only, no name)
+    function roomLink() {
+        return location.origin + location.pathname + '?room=' + (roomCode || '');
+    }
+
+    // Copy the invite link to the clipboard and toast
+    function copyRoomLink() {
+        navigator.clipboard.writeText(roomLink()).then(function () {
+            toast('Invite link copied!');
+        });
+    }
+
     // Render player list into a UL element
     function renderPlayers(ulElement) {
         ulElement.innerHTML = '';
@@ -290,6 +302,8 @@ const GameBase = (function () {
         startTimer: startTimer,
         showScreen: showScreen,
         getParam: getParam,
+        roomLink: roomLink,
+        copyRoomLink: copyRoomLink,
         toast: toast,
         escapeHtml: escapeHtml
     };
