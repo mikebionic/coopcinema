@@ -30,7 +30,13 @@
     else document.getElementById('playerName').value = GameBase.generateName();
 
     var roomParam = GameBase.getParam('room');
-    if (roomParam) document.getElementById('roomInput').value = roomParam;
+    if (roomParam) {
+        document.getElementById('roomInput').value = roomParam;
+        // Invite link → auto-join that exact room (no separate-room mistakes).
+        setName();
+        GameBase.joinRoom(roomParam);
+        startWaiting();
+    }
 
     // Enter key on guess input
     document.getElementById('guessInput').addEventListener('keydown', function (e) {

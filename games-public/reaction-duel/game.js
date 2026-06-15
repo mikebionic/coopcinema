@@ -27,6 +27,11 @@
     var roomParam = GameBase.getParam('room');
     if (roomParam) {
         document.getElementById('roomInput').value = roomParam;
+        // Came in through an invite link → join that exact room automatically,
+        // so two people can never end up in separate rooms by mistake.
+        setName();
+        GameBase.joinRoom(roomParam);
+        startWaiting();
     }
 
     // --- Lobby Actions ---
